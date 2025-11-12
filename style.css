@@ -1,0 +1,4 @@
+body { font-family: system-ui, Arial, sans-serif; max-width: 900px; margin: 40px auto; line-height: 1.6; }
+header { border-bottom: 1px solid #ddd; margin-bottom: 24px; padding-bottom: 12px; }
+button { padding: 10px 16px; border-radius: 8px; border: 1px solid #ccc; cursor: pointer; }
+button:hover { filter: brightness(0.95); }
