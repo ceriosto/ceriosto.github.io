@@ -1,45 +1,35 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <link rel="icon" type="image/jpeg" href="img/07.jpg">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>DN_Por siempre ❤️</title>
+  <title>Te amo ❤️</title>
   <meta name="description" content="Felices 4 meses"/>
   <style>
     :root{
-      --bg:#fff8f7; --ink:#2d2a2a; --muted:#7a6b6b; --brand:#ff7aa2; --brand-2:#ffd4e1; --card:#ffffff;
+      --bg:#ffcccc; /* rojo claro */
+      --ink:#2d2a2a; 
+      --muted:#7a6b6b; 
+      --brand:#ff7aa2; 
+      --brand-2:#ffd4e1; 
+      --card:#ffffff;
     }
-    /* Fondo rojo difuminado a blanco */
     html,body{
       margin:0;
       padding:0;
-      background: linear-gradient(120deg, #ff4d4d 0%, #ffd6d6 40%, #ffffff 85%);
+      background:var(--bg);
       color:var(--ink);
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, sans-serif;
     }
     .wrap{max-width:960px;margin:0 auto;padding:24px}
     header{display:flex;gap:16px;align-items:center;justify-content:space-between;margin:8px 0 24px}
     h1{font-size:clamp(28px,4vw,40px);margin:8px 0}
-    /* Frase un poco más grande */
     .tag{font-size:18px;color:var(--muted)}
     .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin:24px 0}
     .card{position:relative;overflow:hidden;border-radius:16px;background:var(--card);border:1px solid #f1eaea;box-shadow:0 4px 14px rgba(0,0,0,.04);cursor:pointer;}
     .card img{width:100%;height:220px;object-fit:cover;display:block;transition:transform .3s ease}
     .card:hover img{transform:scale(1.04)}
-    /* “Haz clic para ver” negro con texto blanco */
-    .card .hint{
-      position:absolute;
-      inset:auto 8px 8px 8px;
-      background:#000;
-      color:#fff;
-      backdrop-filter:blur(4px);
-      padding:8px 10px;
-      border-radius:12px;
-      font-size:13px;
-      border:1px solid #000;
-      opacity:.9;
-    }
+    .card .hint{position:absolute;inset:auto 8px 8px 8px;background:#000;color:#fff;backdrop-filter:blur(4px);padding:8px 10px;border-radius:12px;font-size:13px;border:1px solid #000;opacity:.9}
     .chip{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px dashed var(--brand);padding:6px 10px;border-radius:999px;color:#b3395a;font-size:12px}
     .cta{display:flex;align-items:center;justify-content:center;gap:10px;margin:26px 0}
     .btn{appearance:none;background:var(--brand);color:#fff;border:none;border-radius:999px;padding:12px 18px;font-weight:600;cursor:pointer;box-shadow:0 6px 14px rgba(255,122,162,.35);transition:transform .08s ease,filter .2s}
@@ -48,7 +38,7 @@
     .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.55);backdrop-filter:blur(2px);padding:24px;z-index:30}
     .modal.open{display:flex}
     .sheet{max-width:920px;width:100%;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.35);border:1px solid #e9d9dd}
-    .sheet img{width:100%;max-height:55vh;object-fit:contain;display:block;background:#000}
+    .sheet img{width:100%;max-height:60vh;object-fit:cover;display:block;background:#000}
     .sheet .meta{padding:16px}
     .sheet .meta p{margin:0 0 6px}
     .sheet .meta .small{color:#7b6f6f;font-size:13px}
@@ -56,13 +46,7 @@
     .icon-btn{background:#fff;border:1px solid #f1e3e7;border-radius:10px;padding:8px 12px;cursor:pointer}
     #carta{display:none;margin:24px 0}
     #carta.open{display:block}
-    .carta-box{
-      background:#ffe6e6;
-      border:2px solid #000;
-      border-radius:18px;
-      padding:20px;
-      box-shadow:0 8px 22px rgba(0,0,0,.06)
-    }
+    .carta-box{background:#ffe6e6;border:2px solid #000;border-radius:18px;padding:20px;box-shadow:0 8px 22px rgba(0,0,0,.06)}
     .carta-box h2{margin:0 0 10px}
     .carta-box p{white-space:pre-wrap}
     #loginGate{position:fixed;inset:0;background:linear-gradient(180deg,#ffe9f1,#fff);display:none;align-items:center;justify-content:center;padding:24px;z-index:50}
@@ -72,17 +56,9 @@
     .field{display:flex;flex-direction:column;gap:6px;margin:12px 0}
     .field input{border:1px solid #e7d7db;border-radius:10px;padding:10px 12px;font-size:16px}
     .muted{color:#7b6f6f;font-size:13px}
-    /* Botón flotante de música */
-    .music-btn{
-      position:fixed; right:16px; bottom:16px;
-      border:1px solid #e7d7db; background:#fff; border-radius:999px;
-      padding:10px 14px; box-shadow:0 6px 18px rgba(0,0,0,.12);
-      cursor:pointer; z-index:60; font-size:16px;
-    }
   </style>
 </head>
 <body>
-
   <!-- Botón flotante de música -->
   <button id="musicBtn" class="music-btn" aria-label="Música">🔈</button>
 
