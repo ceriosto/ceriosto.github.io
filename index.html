@@ -10,7 +10,7 @@
     :root{
       --bg:#fff8f7; --ink:#2d2a2a; --muted:#7a6b6b; --brand:#ff7aa2; --brand-2:#ffd4e1; --card:#ffffff;
     }
-    /* CAMBIO 1: fondo rojo que se difumina a blanco hacia un lado */
+    /* Fondo rojo difuminado a blanco */
     html,body{
       margin:0;
       padding:0;
@@ -21,13 +21,13 @@
     .wrap{max-width:960px;margin:0 auto;padding:24px}
     header{display:flex;gap:16px;align-items:center;justify-content:space-between;margin:8px 0 24px}
     h1{font-size:clamp(28px,4vw,40px);margin:8px 0}
-    /* CAMBIO 3: hacer la frase un poco más grande */
+    /* Frase un poco más grande */
     .tag{font-size:18px;color:var(--muted)}
     .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin:24px 0}
     .card{position:relative;overflow:hidden;border-radius:16px;background:var(--card);border:1px solid #f1eaea;box-shadow:0 4px 14px rgba(0,0,0,.04);cursor:pointer;}
     .card img{width:100%;height:220px;object-fit:cover;display:block;transition:transform .3s ease}
     .card:hover img{transform:scale(1.04)}
-    /* CAMBIO 2: botón/etiqueta “Haz clic para ver” en negro con texto blanco */
+    /* “Haz clic para ver” negro con texto blanco */
     .card .hint{
       position:absolute;
       inset:auto 8px 8px 8px;
@@ -48,7 +48,7 @@
     .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.55);backdrop-filter:blur(2px);padding:24px;z-index:30}
     .modal.open{display:flex}
     .sheet{max-width:920px;width:100%;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.35);border:1px solid #e9d9dd}
-    .sheet img{width:100%;max-height:60vh;object-fit:cover;display:block;background:#000}
+    .sheet img{width:100%;max-height:55vh;object-fit:contain;display:block;background:#000}
     .sheet .meta{padding:16px}
     .sheet .meta p{margin:0 0 6px}
     .sheet .meta .small{color:#7b6f6f;font-size:13px}
@@ -56,7 +56,13 @@
     .icon-btn{background:#fff;border:1px solid #f1e3e7;border-radius:10px;padding:8px 12px;cursor:pointer}
     #carta{display:none;margin:24px 0}
     #carta.open{display:block}
-    .carta-box{background:#fff;border:1px solid #f2e6e6;border-radius:18px;padding:20px;box-shadow:0 8px 22px rgba(0,0,0,.06)}
+    .carta-box{
+      background:#ffe6e6;
+      border:2px solid #000;
+      border-radius:18px;
+      padding:20px;
+      box-shadow:0 8px 22px rgba(0,0,0,.06)
+    }
     .carta-box h2{margin:0 0 10px}
     .carta-box p{white-space:pre-wrap}
     #loginGate{position:fixed;inset:0;background:linear-gradient(180deg,#ffe9f1,#fff);display:none;align-items:center;justify-content:center;padding:24px;z-index:50}
@@ -66,9 +72,20 @@
     .field{display:flex;flex-direction:column;gap:6px;margin:12px 0}
     .field input{border:1px solid #e7d7db;border-radius:10px;padding:10px 12px;font-size:16px}
     .muted{color:#7b6f6f;font-size:13px}
+    /* Botón flotante de música */
+    .music-btn{
+      position:fixed; right:16px; bottom:16px;
+      border:1px solid #e7d7db; background:#fff; border-radius:999px;
+      padding:10px 14px; box-shadow:0 6px 18px rgba(0,0,0,.12);
+      cursor:pointer; z-index:60; font-size:16px;
+    }
   </style>
 </head>
 <body>
+
+  <!-- Botón flotante de música -->
+  <button id="musicBtn" class="music-btn" aria-label="Música">🔈</button>
+
   <div id="loginGate">
     <div class="panel">
       <h3>Bienvenida mi amor ❤️</h3>
@@ -169,6 +186,30 @@ const closeBtn = $('#close');
 let idxActual = 0;
 const LS_VISTAS_KEY = 'vist_fotos';
 let visitadas = new Set(JSON.parse(localStorage.getItem(LS_VISTAS_KEY)||'[]'));
+
+/* ====== 🔊 Música de fondo ====== */
+const AUDIO_SRC = 'music/C. Tangana, Eliades Ochoa - Muriendo De Envidia.mp3'; // cambia si usas otro nombre o carpeta
+const audio = new Audio();
+audio.src = encodeURI(AUDIO_SRC);
+audio.loop = true;
+audio.preload = 'auto';
+audio.volume = 0.7;
+
+const musicBtn = document.getElementById('musicBtn');
+function setBtnPlaying(isPlaying){
+  musicBtn.textContent = isPlaying ? '🔊' : '🔈';
+}
+function tryPlay(){
+  audio.play().then(()=>setBtnPlaying(true)).catch(()=>{/*silencio si el navegador bloquea*/});
+}
+musicBtn.addEventListener('click', ()=>{
+  if(audio.paused){ tryPlay(); } else { audio.pause(); setBtnPlaying(false); }
+});
+// primer gesto del usuario en cualquier parte -> intentar reproducir
+const startOnce = ()=>{ tryPlay(); window.removeEventListener('pointerdown', startOnce); };
+window.addEventListener('pointerdown', startOnce);
+
+/* ====== Galería ====== */
 function renderGaleria(){
   galeria.innerHTML = '';
   fotos.forEach((f, i)=>{
@@ -180,6 +221,7 @@ function renderGaleria(){
   });
   actualizarCartaEstado();
 }
+
 function abrirModal(i){
   idxActual = i;
   const f = fotos[i];
@@ -191,30 +233,38 @@ function abrirModal(i){
   localStorage.setItem(LS_VISTAS_KEY, JSON.stringify([...visitadas]));
   actualizarCartaEstado();
 }
+
 function cerrarModal(){ modal.classList.remove('open'); }
 function anterior(){ idxActual = (idxActual-1+fotos.length)%fotos.length; abrirModal(idxActual); }
 function siguiente(){ idxActual = (idxActual+1)%fotos.length; abrirModal(idxActual); }
+
 prev.addEventListener('click', e=>{ e.stopPropagation(); anterior(); });
 next.addEventListener('click', e=>{ e.stopPropagation(); siguiente(); });
 closeBtn.addEventListener('click', e=>{ e.stopPropagation(); cerrarModal(); });
 modal.addEventListener('click', e=>{ if(e.target===modal) cerrarModal(); });
+
 window.addEventListener('keydown', e=>{
   if(!modal.classList.contains('open')) return;
   if(e.key==='Escape') cerrarModal();
   if(e.key==='ArrowLeft') anterior();
   if(e.key==='ArrowRight') siguiente();
 });
+
 function actualizarCartaEstado(){
   const ok = visitadas.size >= MIN_FOTOS_VISTAS;
   btnCarta.disabled = !ok;
   btnCarta.title = ok ? 'Abrir carta' : `Visita al menos ${MIN_FOTOS_VISTAS} fotos`;
 }
+
 btnCarta.addEventListener('click', ()=>{
   carta.classList.toggle('open');
   window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});
 });
+
 const mesversario = document.getElementById('mesversario');
 mesversario.textContent = diffMesesDesde(FECHA_INICIO) + ' meses';
+
+/* ====== Login ====== */
 const loginGate = document.getElementById('loginGate');
 function aplicarLoginGate(){
   if(!REQUIRE_LOGIN){ loginGate.classList.remove('show'); return; }
@@ -227,6 +277,7 @@ function aplicarLoginGate(){
     if(norm(u)===norm(VALID_USER) && p===VALID_PASS){
       localStorage.setItem('ok_login_v2','1');
       loginGate.classList.remove('show');
+      tryPlay(); // 👉 arranca la música al entrar
     } else {
       alert('Usuario o contraseña incorrectos');
     }
@@ -234,6 +285,7 @@ function aplicarLoginGate(){
   document.getElementById('lgBtn').addEventListener('click', onSubmit);
   document.getElementById('lgPass').addEventListener('keydown', e=>{ if(e.key==='Enter') onSubmit(); });
 }
+
 renderGaleria();
 aplicarLoginGate();
 </script>
