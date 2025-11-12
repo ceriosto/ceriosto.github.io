@@ -9,21 +9,24 @@
     :root{
       --bg:#fff8f7; --ink:#2d2a2a; --muted:#7a6b6b; --brand:#ff7aa2; --brand-2:#ffd4e1; --card:#ffffff;
     }
+    /* CAMBIO 1: fondo rojo que se difumina a blanco hacia un lado */
     html,body{
       margin:0;
       padding:0;
-      background:linear-gradient(120deg,#ff4d4d 0%, #ffd6d6 40%, #ffffff 85%);
+      background: linear-gradient(120deg, #ff4d4d 0%, #ffd6d6 40%, #ffffff 85%);
       color:var(--ink);
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, sans-serif;
     }
     .wrap{max-width:960px;margin:0 auto;padding:24px}
     header{display:flex;gap:16px;align-items:center;justify-content:space-between;margin:8px 0 24px}
     h1{font-size:clamp(28px,4vw,40px);margin:8px 0}
+    /* CAMBIO 3: hacer la frase un poco más grande */
     .tag{font-size:18px;color:var(--muted)}
     .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin:24px 0}
     .card{position:relative;overflow:hidden;border-radius:16px;background:var(--card);border:1px solid #f1eaea;box-shadow:0 4px 14px rgba(0,0,0,.04);cursor:pointer;}
     .card img{width:100%;height:220px;object-fit:cover;display:block;transition:transform .3s ease}
     .card:hover img{transform:scale(1.04)}
+    /* CAMBIO 2: botón/etiqueta “Haz clic para ver” en negro con texto blanco */
     .card .hint{
       position:absolute;
       inset:auto 8px 8px 8px;
@@ -52,13 +55,7 @@
     .icon-btn{background:#fff;border:1px solid #f1e3e7;border-radius:10px;padding:8px 12px;cursor:pointer}
     #carta{display:none;margin:24px 0}
     #carta.open{display:block}
-    .carta-box{
-      background:#ffe6e6;
-      border:2px solid #000;
-      border-radius:18px;
-      padding:20px;
-      box-shadow:0 8px 22px rgba(0,0,0,.06);
-    }
+    .carta-box{background:#fff;border:1px solid #f2e6e6;border-radius:18px;padding:20px;box-shadow:0 8px 22px rgba(0,0,0,.06)}
     .carta-box h2{margin:0 0 10px}
     .carta-box p{white-space:pre-wrap}
     #loginGate{position:fixed;inset:0;background:linear-gradient(180deg,#ffe9f1,#fff);display:none;align-items:center;justify-content:center;padding:24px;z-index:50}
@@ -154,7 +151,7 @@ const REQUIRE_LOGIN = true;
 const VALID_USER = '4 meses';
 const VALID_PASS = '12/07/2025';
 function norm(s){
-  return s.normalize('NFD').replace(/\\p{Diacritic}/gu,'').toLowerCase().trim().replace(/\\s+/g,' ');
+  return s.normalize('NFD').replace(/\p{Diacritic}/gu,'').toLowerCase().trim().replace(/\s+/g,' ');
 }
 const MIN_FOTOS_VISTAS = 6;
 const $ = (q) => document.querySelector(q);
@@ -176,7 +173,7 @@ function renderGaleria(){
   fotos.forEach((f, i)=>{
     const card = document.createElement('div');
     card.className = 'card';
-    card.innerHTML = `<img src=\"${f.src}\" alt=\"recuerdo ${i+1}\"><div class=\"hint\">Haz clic para ver</div>`;
+    card.innerHTML = `<img src="${f.src}" alt="recuerdo ${i+1}"><div class="hint">Haz clic para ver</div>`;
     card.addEventListener('click',()=> abrirModal(i));
     galeria.appendChild(card);
   });
