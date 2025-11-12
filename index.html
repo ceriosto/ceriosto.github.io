@@ -3,22 +3,218 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mi sitio</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Te amo ❤️</title>
+  <meta name="description" content="Felices 4 meses"/>
+  <style>
+    :root{
+      --bg:#fff8f7; --ink:#2d2a2a; --muted:#7a6b6b; --brand:#ff7aa2; --brand-2:#ffd4e1; --card:#ffffff;
+    }
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, sans-serif;}
+    .wrap{max-width:960px;margin:0 auto;padding:24px}
+    header{display:flex;gap:16px;align-items:center;justify-content:space-between;margin:8px 0 24px}
+    h1{font-size:clamp(28px,4vw,40px);margin:8px 0}
+    .tag{font-size:14px;color:var(--muted)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin:24px 0}
+    .card{position:relative;overflow:hidden;border-radius:16px;background:var(--card);border:1px solid #f1eaea;box-shadow:0 4px 14px rgba(0,0,0,.04);cursor:pointer;}
+    .card img{width:100%;height:220px;object-fit:cover;display:block;transition:transform .3s ease}
+    .card:hover img{transform:scale(1.04)}
+    .card .hint{position:absolute;inset:auto 8px 8px 8px;background:rgba(255,255,255,.85);backdrop-filter:blur(4px);padding:8px 10px;border-radius:12px;font-size:13px}
+    .chip{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px dashed var(--brand);padding:6px 10px;border-radius:999px;color:#b3395a;font-size:12px}
+    .cta{display:flex;align-items:center;justify-content:center;gap:10px;margin:26px 0}
+    .btn{appearance:none;background:var(--brand);color:#fff;border:none;border-radius:999px;padding:12px 18px;font-weight:600;cursor:pointer;box-shadow:0 6px 14px rgba(255,122,162,.35);transition:transform .08s ease,filter .2s}
+    .btn[disabled]{opacity:.5;cursor:not-allowed;filter:grayscale(.3)}
+    .btn:active{transform:translateY(1px)}
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.55);backdrop-filter:blur(2px);padding:24px;z-index:30}
+    .modal.open{display:flex}
+    .sheet{max-width:920px;width:100%;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.35);border:1px solid #e9d9dd}
+    .sheet img{width:100%;max-height:60vh;object-fit:cover;display:block;background:#000}
+    .sheet .meta{padding:16px}
+    .sheet .meta p{margin:0 0 6px}
+    .sheet .meta .small{color:#7b6f6f;font-size:13px}
+    .sheet .bar{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-top:1px solid #f0e6e8;background:#fffafc}
+    .icon-btn{background:#fff;border:1px solid #f1e3e7;border-radius:10px;padding:8px 12px;cursor:pointer}
+    #carta{display:none;margin:24px 0}
+    #carta.open{display:block}
+    .carta-box{background:#fff;border:1px solid #f2e6e6;border-radius:18px;padding:20px;box-shadow:0 8px 22px rgba(0,0,0,.06)}
+    .carta-box h2{margin:0 0 10px}
+    .carta-box p{white-space:pre-wrap}
+    #loginGate{position:fixed;inset:0;background:linear-gradient(180deg,#ffe9f1,#fff);display:none;align-items:center;justify-content:center;padding:24px;z-index:50}
+    #loginGate.show{display:flex}
+    .panel{width:100%;max-width:420px;background:#fff;border:1px solid #f0e2e6;padding:22px;border-radius:18px;box-shadow:0 16px 44px rgba(0,0,0,.12)}
+    .panel h3{margin:0 0 8px}
+    .field{display:flex;flex-direction:column;gap:6px;margin:12px 0}
+    .field input{border:1px solid #e7d7db;border-radius:10px;padding:10px 12px;font-size:16px}
+    .muted{color:#7b6f6f;font-size:13px}
+  </style>
 </head>
 <body>
-  <header>
-    <h1>¡Hola mundo desde GitHub Pages!</h1>
-    <p>Esto está alojado en <code>tuusuario.github.io</code>.</p>
-  </header>
+  <div id="loginGate">
+    <div class="panel">
+      <h3>Bienvenida mi amor ❤️</h3>
+      <p class="muted">Escribe el usuario y la contraseña para entrar.</p>
+      <p class="muted">Usuario: Meses que cumplimos y al lado la palabra "meses". Ej: <code>4 meses</code></p>
+      <p class="muted">Contraseña: La fecha en que te pedí ser novios. Ej: <code>12/07/2025</code></p>
+      <div class="field">
+        <label>Usuario</label>
+        <input id="lgUser" placeholder="ej. 4 meses" autocomplete="off"/>
+      </div>
+      <div class="field">
+        <label>Contraseña</label>
+        <input id="lgPass" type="password" placeholder="**/**/****"/>
+      </div>
+      <button class="btn" id="lgBtn">Entrar</button>
+    </div>
+  </div>
 
-  <main>
-    <p>Edita este archivo y haz commit para ver cambios.</p>
-    <button id="btn">Haz clic</button>
-  </main>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Felices 4 meses ❤️</h1>
+        <div class="tag">Como siempre te digo, Te amo de aqui hasta pasar por todos los universos ∞</div>
+      </div>
+      <div class="chip">Mesversario <span id="mesversario"></span></div>
+    </header>
 
-  <script>
-    document.getElementById("btn").onclick = () => alert("¡Funciona!");
-  </script>
+    <div class="grid" id="galeria"></div>
+
+    <div class="cta">
+      <button class="btn" id="btnCarta" disabled>Abrir 💌</button>
+    </div>
+
+    <section id="carta">
+      <div class="carta-box">
+        <h2>Mi carta para ti</h2>
+        <p id="textoCarta">Querida ________,
+
+Gracias por cada risa, cada abrazo y cada momento. Esta página es un pedacito de todo lo que siento por ti. Te amo.
+
+Con amor,
+Tu ________ 💛</p>
+      </div>
+    </section>
+  </div>
+
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="sheet" role="dialog" aria-modal="true">
+      <img id="mImg" alt="Recuerdo" />
+      <div class="meta">
+        <p id="mFrase"></p>
+        <div class="small" id="mIndex"></div>
+      </div>
+      <div class="bar">
+        <button class="icon-btn" id="prev">⟵ Anterior</button>
+        <button class="icon-btn" id="close">Cerrar</button>
+        <button class="icon-btn" id="next">Siguiente ⟶</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+const FECHA_INICIO = new Date('2025-07-12');
+function diffMesesDesde(d){
+  const ahora = new Date();
+  let meses = (ahora.getFullYear() - d.getFullYear())*12 + (ahora.getMonth()-d.getMonth());
+  if(ahora.getDate() < d.getDate()) meses -= 1;
+  return meses < 0 ? 0 : meses;
+}
+
+const fotos = [
+  { src: 'img/01.jpg', frase: 'Nuestro lugar favorito 😍' },
+  { src: 'img/02.jpg', frase: 'Tu sonrisa ilumina todo ✨' },
+  { src: 'img/03.jpg', frase: 'Contigo, todo es mejor 💛' },
+  { src: 'img/04.jpg', frase: 'Siempre juntos, siempre nosotros 🤍' },
+  { src: 'img/05.jpg', frase: 'Gracias por tanto amor 🫶' },
+  { src: 'img/06.jpg', frase: 'Un recuerdo más, porque nunca son suficientes 💕' }
+];
+
+const REQUIRE_LOGIN = true;
+const VALID_USER = '4 meses';
+const VALID_PASS = '12/07/2025';
+function norm(s){
+  return s.normalize('NFD').replace(/\p{Diacritic}/gu,'').toLowerCase().trim().replace(/\s+/g,' ');
+}
+const MIN_FOTOS_VISTAS = 3;
+const $ = (q) => document.querySelector(q);
+const galeria = $('#galeria');
+const btnCarta = $('#btnCarta');
+const carta = $('#carta');
+const modal = $('#modal');
+const mImg = $('#mImg');
+const mFrase = $('#mFrase');
+const mIndex = $('#mIndex');
+const prev = $('#prev');
+const next = $('#next');
+const closeBtn = $('#close');
+let idxActual = 0;
+const LS_VISTAS_KEY = 'vist_fotos';
+let visitadas = new Set(JSON.parse(localStorage.getItem(LS_VISTAS_KEY)||'[]'));
+function renderGaleria(){
+  galeria.innerHTML = '';
+  fotos.forEach((f, i)=>{
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `<img src="${f.src}" alt="recuerdo ${i+1}"><div class="hint">Haz clic para ver</div>`;
+    card.addEventListener('click',()=> abrirModal(i));
+    galeria.appendChild(card);
+  });
+  actualizarCartaEstado();
+}
+function abrirModal(i){
+  idxActual = i;
+  const f = fotos[i];
+  mImg.src = f.src;
+  mFrase.textContent = f.frase || '';
+  mIndex.textContent = `Foto ${i+1} de ${fotos.length}`;
+  modal.classList.add('open');
+  visitadas.add(i);
+  localStorage.setItem(LS_VISTAS_KEY, JSON.stringify([...visitadas]));
+  actualizarCartaEstado();
+}
+function cerrarModal(){ modal.classList.remove('open'); }
+function anterior(){ idxActual = (idxActual-1+fotos.length)%fotos.length; abrirModal(idxActual); }
+function siguiente(){ idxActual = (idxActual+1)%fotos.length; abrirModal(idxActual); }
+prev.addEventListener('click', e=>{ e.stopPropagation(); anterior(); });
+next.addEventListener('click', e=>{ e.stopPropagation(); siguiente(); });
+closeBtn.addEventListener('click', e=>{ e.stopPropagation(); cerrarModal(); });
+modal.addEventListener('click', e=>{ if(e.target===modal) cerrarModal(); });
+window.addEventListener('keydown', e=>{
+  if(!modal.classList.contains('open')) return;
+  if(e.key==='Escape') cerrarModal();
+  if(e.key==='ArrowLeft') anterior();
+  if(e.key==='ArrowRight') siguiente();
+});
+function actualizarCartaEstado(){
+  const ok = visitadas.size >= MIN_FOTOS_VISTAS;
+  btnCarta.disabled = !ok;
+  btnCarta.title = ok ? 'Abrir carta' : `Visita al menos ${MIN_FOTOS_VISTAS} fotos`;
+}
+btnCarta.addEventListener('click', ()=>{
+  carta.classList.toggle('open');
+  window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});
+});
+const mesversario = document.getElementById('mesversario');
+mesversario.textContent = diffMesesDesde(FECHA_INICIO) + ' meses';
+const loginGate = document.getElementById('loginGate');
+function aplicarLoginGate(){
+  if(!REQUIRE_LOGIN){ loginGate.classList.remove('show'); return; }
+  const ok = localStorage.getItem('ok_login_v2') === '1';
+  if(ok){ loginGate.classList.remove('show'); return; }
+  loginGate.classList.add('show');
+  const onSubmit = ()=>{
+    const u = document.getElementById('lgUser').value;
+    const p = document.getElementById('lgPass').value;
+    if(norm(u)===norm(VALID_USER) && p===VALID_PASS){
+      localStorage.setItem('ok_login_v2','1');
+      loginGate.classList.remove('show');
+    } else {
+      alert('Usuario o contraseña incorrectos');
+    }
+  };
+  document.getElementById('lgBtn').addEventListener('click', onSubmit);
+  document.getElementById('lgPass').addEventListener('keydown', e=>{ if(e.key==='Enter') onSubmit(); });
+}
+renderGaleria();
+aplicarLoginGate();
+</script>
 </body>
 </html>
